@@ -1,0 +1,226 @@
+{
+    "swagger": "2.0",
+
+    "info": {
+      "version": "1.0.0",
+      "title": "Node.js Demo Application API",
+      "description": "Node.js and Express.js Application API",
+      "license": {
+        "name": "Node.js Demo"
+      }
+    },
+
+    "tags": [
+      { "name": "Product" }
+    ],
+
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+
+    "paths": {
+      "/product": {
+        "get": {
+          "tags": ["Product"],
+          "summary": "Get all product",
+          "responses": {
+            "200": {
+              "description": "Get all product",
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "status": { "type": "boolean"},
+                      "data": {
+                        "type" : "array",
+                        "items":{
+                          "allOf":[
+                            { "$ref": "#/definitions/Product" },
+                            {
+                              "type": "object",
+                              "properties":{
+                                "_id"   : { "type": "string"}
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Product"],
+          "summary": "Create new product",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Ccreate new product",
+              "schema": {
+                "allOf":[
+
+                  {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string" },
+                        "price": { "type": "number" }
+                    },
+                    "required": ["name", "price"]
+                  }
+                ]
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Create new product",
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "status"  : { "type": "boolean"},
+                      "data": {
+                        "allOf":[
+                          { "$ref": "#/definitions/Product" },
+                          {
+                            "type": "object",
+                            "properties":{
+                              "_id"   : { "type": "string"}
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+
+      "/product/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of product",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": ["Product"],
+          "summary": "Get product by id",
+          "responses": {
+            "200": {
+              "description": "Get product by id",
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "status": { "type": "boolean"},
+                      "data": {
+                        "allOf":[
+                          { "$ref": "#/definitions/Product" },
+                          {
+                            "type": "object",
+                            "properties":{
+                              "_id"   : { "type": "string"}
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": ["Product"],
+          "summary": "Update product by id",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Update product by id",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name"  : { "type"  : "string" },
+                  "price" : { "type"  : "number" }
+                }
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "Update product by id",
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "status"  : { "type": "boolean"},
+                      "data": {
+                        "allOf":[
+                          { "$ref": "#/definitions/Product" },
+                          {
+                            "type": "object",
+                            "properties":{
+                              "_id"   : { "type": "string"}
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Product"],
+          "summary": "Delete product by id",
+          "responses": {
+            "200": {
+              "description": "Delete product by id",
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "status"  : { "type": "boolean"},
+                      "message" : { "type": "string"}
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "definitions": {
+      "Product": {
+        "properties": {
+          "name"  : { "type"  : "string" },
+          "price" : { "type"  : "number" },
+          "_id"   : { "type"  : "string" }
+        }
+      }
+    }
+
+  }
